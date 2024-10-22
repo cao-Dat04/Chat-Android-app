@@ -44,3 +44,7 @@ dependencies {
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
 }
+
+
+// Đừng quên áp dụng plugin Google Services
+apply plugin: 'com.google.gms.google-services'

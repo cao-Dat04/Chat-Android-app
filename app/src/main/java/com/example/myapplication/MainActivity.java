@@ -44,12 +44,9 @@ public class MainActivity extends AppCompatActivity {
         // Kiểm tra kết nối với Firebase
         checkFirebaseConnection();
     }
-
     private void checkFirebaseConnection() {
-        // Khởi tạo reference cho Firebase Database
         database = FirebaseDatabase.getInstance().getReference();
-
-        // Ghi một giá trị vào Realtime Database
+        // Thực hiện ghi dữ liệu vào Firebase chỉ để kiểm tra
         database.child("test").setValue("Hello Firebase").addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -61,4 +58,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }

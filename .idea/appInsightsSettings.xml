@@ -10,9 +10,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.example.myapplication" />
-                  <option name="mobileSdkAppId" value="1:529312422175:android:62f0928c1515497b98b82a" />
-                  <option name="projectId" value="dvd-b23b0" />
-                  <option name="projectNumber" value="529312422175" />
+                  <option name="mobileSdkAppId" value="1:891598146858:android:db273c6acc15fa9bdf2253" />
+                  <option name="projectId" value="dvd-messenger" />
+                  <option name="projectNumber" value="891598146858" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class login extends AppCompatActivity {
     Button button;
+    TextView createAccountButton;
     EditText email, password;
     FirebaseAuth auth;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
@@ -35,12 +36,22 @@ public class login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
-        getSupportActionBar().hide();
 
         auth = FirebaseAuth.getInstance();
         button = findViewById(R.id.logbutton);
         email = findViewById(R.id.editTextLogEmail);
         password = findViewById(R.id.editTextLogPassword);
+        createAccountButton = findViewById(R.id.create_account);
+
+        createAccountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(login.this, register.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override

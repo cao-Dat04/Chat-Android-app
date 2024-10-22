@@ -1,13 +1,14 @@
 {
   "project_info": {
-    "project_number": "529312422175",
-    "project_id": "dvd-b23b0",
-    "storage_bucket": "dvd-b23b0.appspot.com"
+    "project_number": "891598146858",
+    "firebase_url": "https://dvd-messenger-default-rtdb.firebaseio.com",
+    "project_id": "dvd-messenger",
+    "storage_bucket": "dvd-messenger.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:529312422175:android:62f0928c1515497b98b82a",
+        "mobilesdk_app_id": "1:891598146858:android:db273c6acc15fa9bdf2253",
         "android_client_info": {
           "package_name": "com.example.myapplication"
         }
@@ -15,7 +16,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDqdzIezwts37ybAwkFfrsQrVOARhZB1o0"
+          "current_key": "AIzaSyAAbTM2NQ3J6yvZbSb2h0kHNm9A6Vg8uzE"
         }
       ],
       "services": {

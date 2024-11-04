@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.R;
 import com.example.myapplication.model.msgModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
@@ -78,6 +79,7 @@ public class messagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.pro.setVisibility(View.GONE);
             viewHolder.imageView.setVisibility(View.VISIBLE);
             Picasso.get().load(message.getMessage()).into(viewHolder.imageView);
+            viewHolder.itemView.setOnClickListener(v -> downloadFile(message.getMessage()));
         } else if (message.getType().equals("file")) {
             viewHolder.pro.setVisibility(View.VISIBLE);
             viewHolder.fileLayout.setVisibility(View.VISIBLE);
@@ -99,6 +101,7 @@ public class messagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.pro.setVisibility(View.GONE);
             viewHolder.imageView.setVisibility(View.VISIBLE);
             Picasso.get().load(message.getMessage()).into(viewHolder.imageView);
+            viewHolder.itemView.setOnClickListener(v -> downloadFile(message.getMessage()));
         } else if (message.getType().equals("file")) {
             viewHolder.pro.setVisibility(View.VISIBLE);
             viewHolder.fileLayout.setVisibility(View.VISIBLE);
@@ -106,7 +109,6 @@ public class messagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.itemView.setOnClickListener(v -> downloadFile(message.getMessage()));
         }
     }
-
 
     private void downloadFile(String fileLinks) {
         String[] links = fileLinks.split(","); // Giả sử các liên kết được ngăn cách bằng dấu phẩy

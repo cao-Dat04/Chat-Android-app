@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <!-- Thêm quyền truy cập internet -->
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -14,6 +15,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
+        <service
+            android:name=".controller.MyFirebaseMessagingService"
+            android:enabled="true"
+            android:exported="true">
+
+        </service>
+
         <activity
             android:name=".SettingActivity"
             android:exported="false" />
@@ -38,6 +46,10 @@
         <activity
             android:name=".view.RegisterActivity"
             android:exported="false" />
+        <activity android:name=".view.ChatActivity" />
+
     </application>
 
+    <!-- Thêm quyền sử dụng thông báo -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 </manifest>

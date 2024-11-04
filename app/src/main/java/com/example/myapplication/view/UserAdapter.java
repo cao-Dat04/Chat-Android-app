@@ -8,7 +8,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.ChatActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.model.Users;
 import java.util.ArrayList;

@@ -35,17 +35,31 @@
 
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/createGroup"
+        android:layout_width="73dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="310dp"
+        android:layout_marginTop="88dp"
+        android:layout_marginEnd="27dp"
+        android:layout_marginBottom="592dp"
+        android:src="@drawable/chat" />
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/mainUserRecyclerView"
+        android:id="@+id/groupChatText"
         android:layout_width="348dp"
         android:layout_height="412dp"
         android:layout_below="@+id/toolBar"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="31dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="98dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginEnd="29dp"
         android:layout_marginBottom="158dp" />
 
     <ImageView

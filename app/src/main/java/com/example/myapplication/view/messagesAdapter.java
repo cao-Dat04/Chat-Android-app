@@ -15,6 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.model.msgModel;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -51,7 +56,7 @@ public class messagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             bindMessage(viewHolder, message);
         } else if (holder instanceof ReceiverViewHolder) {
             ReceiverViewHolder viewHolder = (ReceiverViewHolder) holder;
-            bindMessage(viewHolder, message);
+            bindMessage(viewHolder, message, position);
         }
     }
 
@@ -69,49 +74,88 @@ public class messagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private void bindMessage(SenderViewHolder viewHolder, msgModel message) {
         viewHolder.msgtxt.setVisibility(View.GONE);
         viewHolder.imageView.setVisibility(View.GONE);
-        viewHolder.fileLayout.setVisibility(View.GONE); // Ẩn layout file mặc định
+        viewHolder.fileLayout.setVisibility(View.GONE);
 
         if (message.getType().equals("text")) {
-            viewHolder.pro.setVisibility(View.VISIBLE);
             viewHolder.msgtxt.setVisibility(View.VISIBLE);
             viewHolder.msgtxt.setText(message.getMessage());
         } else if (message.getType().equals("image")) {
-            viewHolder.pro.setVisibility(View.GONE);
             viewHolder.imageView.setVisibility(View.VISIBLE);
             Picasso.get().load(message.getMessage()).into(viewHolder.imageView);
             viewHolder.itemView.setOnClickListener(v -> downloadFile(message.getMessage()));
         } else if (message.getType().equals("file")) {
-            viewHolder.pro.setVisibility(View.VISIBLE);
             viewHolder.fileLayout.setVisibility(View.VISIBLE);
-            viewHolder.fileName.setText(message.getFileName()); // Hiển thị tên file
+            viewHolder.fileName.setText(message.getFileName());
             viewHolder.itemView.setOnClickListener(v -> downloadFile(message.getMessage()));
         }
     }
 
-    private void bindMessage(ReceiverViewHolder viewHolder, msgModel message) {
+    private void bindMessage(ReceiverViewHolder viewHolder, msgModel message, int position) {
         viewHolder.msgtxt.setVisibility(View.GONE);
         viewHolder.imageView.setVisibility(View.GONE);
-        viewHolder.fileLayout.setVisibility(View.GONE); // Ẩn layout file mặc định
+        viewHolder.fileLayout.setVisibility(View.GONE);
+        viewHolder.notedlayout.setVisibility(View.GONE);
 
-        if (message.getType().equals("text")) {
-            viewHolder.pro.setVisibility(View.VISIBLE);
-            viewHolder.msgtxt.setVisibility(View.VISIBLE);
-            viewHolder.msgtxt.setText(message.getMessage());
-        } else if (message.getType().equals("image")) {
+
+
+        if (message.isGroupMessage()) {
             viewHolder.pro.setVisibility(View.GONE);
-            viewHolder.imageView.setVisibility(View.VISIBLE);
-            Picasso.get().load(message.getMessage()).into(viewHolder.imageView);
-            viewHolder.itemView.setOnClickListener(v -> downloadFile(message.getMessage()));
-        } else if (message.getType().equals("file")) {
-            viewHolder.pro.setVisibility(View.VISIBLE);
-            viewHolder.fileLayout.setVisibility(View.VISIBLE);
-            viewHolder.fileName.setText(message.getFileName()); // Hiển thị tên file
-            viewHolder.itemView.setOnClickListener(v -> downloadFile(message.getMessage()));
+
+            // Hiển thị tên người gửi nếu cần
+            if ((position == 0 || !message.getSenderid().equals(messagesAdapterArrayList.get(position - 1).getSenderid()))) {
+                viewHolder.notedlayout.setVisibility(View.VISIBLE);
+                // Lấy tên người gửi từ Firebase
+                getSenderNamebyID(message.getSenderid(), new SenderNameCallback() {
+                    @Override
+                    public void onNameReceived(String senderName) {
+                        viewHolder.noted.setText(senderName);
+                    }
+                });
+                viewHolder.pronone.setVisibility(View.GONE);
+            }
+
+            if (position == messagesAdapterArrayList.size() - 1 ||
+                    !message.getSenderid().equals(messagesAdapterArrayList.get(position + 1).getSenderid())) {
+                viewHolder.pro.setVisibility(View.VISIBLE);
+            }
+
+            if (message.getType().equals("text")) {
+                viewHolder.pronone.setVisibility(View.VISIBLE);
+                viewHolder.msgtxt.setVisibility(View.VISIBLE);
+                viewHolder.msgtxt.setText(message.getMessage());
+            } else if (message.getType().equals("image")) {
+                viewHolder.pronone.setVisibility(View.GONE);
+                viewHolder.imageView.setVisibility(View.VISIBLE);
+                Picasso.get().load(message.getMessage()).into(viewHolder.imageView);
+                viewHolder.itemView.setOnClickListener(v -> downloadFile(message.getMessage()));
+            } else if (message.getType().equals("file")) {
+                viewHolder.pronone.setVisibility(View.VISIBLE);
+                viewHolder.fileLayout.setVisibility(View.VISIBLE);
+                viewHolder.fileName.setText(message.getFileName());
+                viewHolder.itemView.setOnClickListener(v -> downloadFile(message.getMessage()));
+            }
+        }
+        else  {
+            if (message.getType().equals("text")) {
+                viewHolder.pro.setVisibility(View.VISIBLE);
+                viewHolder.msgtxt.setVisibility(View.VISIBLE);
+                viewHolder.msgtxt.setText(message.getMessage());
+            } else if (message.getType().equals("image")) {
+                viewHolder.pro.setVisibility(View.GONE);
+                viewHolder.imageView.setVisibility(View.VISIBLE);
+                Picasso.get().load(message.getMessage()).into(viewHolder.imageView);
+                viewHolder.itemView.setOnClickListener(v -> downloadFile(message.getMessage()));
+            } else if (message.getType().equals("file")) {
+                viewHolder.pro.setVisibility(View.VISIBLE);
+                viewHolder.fileLayout.setVisibility(View.VISIBLE);
+                viewHolder.fileName.setText(message.getFileName());
+                viewHolder.itemView.setOnClickListener(v -> downloadFile(message.getMessage()));
+            }
         }
     }
 
     private void downloadFile(String fileLinks) {
-        String[] links = fileLinks.split(","); // Giả sử các liên kết được ngăn cách bằng dấu phẩy
+        String[] links = fileLinks.split(",");
         for (String link : links) {
             String cleanLink = link.trim();
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(cleanLink));
@@ -120,36 +164,70 @@ public class messagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     static class SenderViewHolder extends RecyclerView.ViewHolder {
-        View pro;
         TextView msgtxt;
         ImageView imageView;
-        TextView fileName; // Thêm TextView để hiển thị tên file
-        View fileLayout; // Layout chứa tên file
+        TextView fileName;
+        View fileLayout;
 
         public SenderViewHolder(@NonNull View itemView) {
             super(itemView);
-            pro = itemView.findViewById(R.id.pro);
             msgtxt = itemView.findViewById(R.id.sendertextset);
             imageView = itemView.findViewById(R.id.senderImageView);
-            fileLayout = itemView.findViewById(R.id.fileLayout); // Layout cho file
-            fileName = itemView.findViewById(R.id.fileName); // ID cho TextView hiển thị tên file
+            fileLayout = itemView.findViewById(R.id.fileLayout);
+            fileName = itemView.findViewById(R.id.fileName);
         }
     }
 
     static class ReceiverViewHolder extends RecyclerView.ViewHolder {
         View pro;
+        View notedlayout;
+        View pronone;
         TextView msgtxt;
         ImageView imageView;
-        TextView fileName; // Thêm TextView để hiển thị tên file
-        View fileLayout; // Layout chứa tên file
+        TextView fileName;
+        View fileLayout;
+        TextView noted;
 
         public ReceiverViewHolder(@NonNull View itemView) {
             super(itemView);
             pro = itemView.findViewById(R.id.pro);
             msgtxt = itemView.findViewById(R.id.recivertextset);
             imageView = itemView.findViewById(R.id.receiverImageView);
-            fileLayout = itemView.findViewById(R.id.fileLayout); // Layout cho file
-            fileName = itemView.findViewById(R.id.fileName); // ID cho TextView hiển thị tên file
+            fileLayout = itemView.findViewById(R.id.fileLayout);
+            fileName = itemView.findViewById(R.id.fileName);
+            noted = itemView.findViewById(R.id.noted);
+            pronone = itemView.findViewById(R.id.pronone);
+            notedlayout = itemView.findViewById(R.id.notedlayout);
         }
     }
+
+    private void getSenderNamebyID(String senderID, final SenderNameCallback callback) {
+        // Giả sử bạn có một Firebase reference tới "user" nơi lưu thông tin người dùng
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("user").child(senderID);
+
+        usersRef.child("fullname").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String senderName = dataSnapshot.getValue(String.class);  // Lấy tên người gửi
+                    callback.onNameReceived(senderName);  // Gọi callback với tên người gửi
+                } else {
+                    callback.onNameReceived("Unknown User");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Xử lý khi có lỗi
+                callback.onNameReceived("Unknown User");
+            }
+        });
+    }
+
+    // Định nghĩa interface callback để trả về tên người gửi
+    public interface SenderNameCallback {
+        void onNameReceived(String senderName);
+    }
+
+
 }

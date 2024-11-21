@@ -11,7 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.model.Group;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHolder> {
 
@@ -19,14 +22,25 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
     private List<Group> groupList;
     private OnItemClickListener onItemClickListener;
 
-    public interface OnItemClickListener {
-        void onItemClick(Group group);
+    public GroupAdapter(Context context, List<Group> groupList) {
+        this.context = context;
+        this.groupList = groupList;
     }
 
+    // Khởi tạo GroupAdapter với listener
     public GroupAdapter(Context context, List<Group> groupList, OnItemClickListener onItemClickListener) {
         this.context = context;
         this.groupList = groupList;
         this.onItemClickListener = onItemClickListener;
+    }
+
+    // Phương thức setOnItemClickListener
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Group group);
     }
 
     @NonNull
@@ -40,7 +54,16 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
     public void onBindViewHolder(@NonNull GroupViewHolder holder, int position) {
         Group group = groupList.get(position);
         holder.groupNameTextView.setText(group.getGroupName());
-        holder.timeCreateGr.setText(String.valueOf(group.getCreatedAt())); // Bạn có thể định dạng lại thời gian nếu cần
+
+        // Lấy thời gian từ group
+        long createdAt = group.getCreatedAt();
+
+        // Chuyển đổi thời gian sang định dạng mong muốn
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss - dd/MM/yyyy", Locale.getDefault());
+        String formattedDate = dateFormat.format(new Date(createdAt));
+
+        // Hiển thị thời gian đã định dạng
+        holder.timeCreateGr.setText(formattedDate);
 
         holder.itemView.setOnClickListener(v -> {
             if (onItemClickListener != null) {
@@ -52,6 +75,15 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
     @Override
     public int getItemCount() {
         return groupList.size();
+    }
+
+    // Phương thức này sẽ cập nhật lại danh sách nhóm trong Adapter
+    public void updateGroupList(List<Group> newGroupList) {
+        if (newGroupList != null) {
+            groupList.clear();  // Xóa bỏ các nhóm cũ
+            groupList.addAll(newGroupList);  // Thêm nhóm mới vào danh sách
+            notifyDataSetChanged();  // Cập nhật RecyclerView
+        }
     }
 
     public static class GroupViewHolder extends RecyclerView.ViewHolder {

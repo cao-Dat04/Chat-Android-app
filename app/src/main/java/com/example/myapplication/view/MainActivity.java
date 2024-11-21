@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth auth;
     DatabaseReference databaseRF;
     RecyclerView mainUserRecyclerView;
-    UserAdapter adapter;
+    UserAdapter adapterUse;
     FirebaseDatabase database;
     ArrayList<Users> usersArrayList;
     ImageView imglogout;
@@ -53,12 +53,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Tạo danh sách người dùng và adapter
         usersArrayList = new ArrayList<>();
-        adapter = new UserAdapter(usersArrayList, MainActivity.this); // Không cần truyền MainActivity
+        adapterUse = new UserAdapter(usersArrayList, MainActivity.this); // Không cần truyền MainActivity
 
         // Thiết lập RecyclerView
         mainUserRecyclerView = findViewById(R.id.mainUserRecyclerView);
         mainUserRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mainUserRecyclerView.setAdapter(adapter);
+        mainUserRecyclerView.setAdapter(adapterUse);
 
         // Lấy dữ liệu người dùng từ Firebase và cập nhật adapter
         reference.addValueEventListener(new ValueEventListener() {
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                     Users users = dataSnapshot.getValue(Users.class);
                     usersArrayList.add(users);
                 }
-                adapter.notifyDataSetChanged();
+                adapterUse.notifyDataSetChanged();
             }
 
             @Override
@@ -77,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("FirebaseError", "Database error: " + error.getMessage());
             }
         });
+
+
 
         // Xử lý sự kiện đăng xuất
         imglogout = findViewById(R.id.logoutimg);
@@ -86,6 +88,18 @@ public class MainActivity extends AppCompatActivity {
                 showLogoutDialog();
             }
         });
+
+        // Xử lý sự kiện khi nhấn vào chatGroup
+        ImageView chatGroup = findViewById(R.id.chatGroup);
+        chatGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Chuyển sang activity nhóm chat
+                Intent intent = new Intent(MainActivity.this, MainActivityGroup.class);
+                startActivity(intent);
+            }
+        });
+
 
         // Kiểm tra xem người dùng đã đăng nhập chưa
         if (auth.getCurrentUser() == null) {

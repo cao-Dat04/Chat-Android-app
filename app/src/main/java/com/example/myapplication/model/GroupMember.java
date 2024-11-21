@@ -5,36 +5,37 @@ public class GroupMember {
     private String userId;   // ID của người dùng
     private long joinedAt;   // Thời gian tham gia nhóm
 
-    public GroupMember() {
-    }
+    // Constructor mặc định
+    public GroupMember() {}
 
     public GroupMember(String groupId, String userId, long joinedAt) {
-        this.groupId = groupId;    // Khởi tạo ID nhóm
-        this.userId = userId;      // Khởi tạo ID người dùng
-        this.joinedAt = joinedAt;  // Khởi tạo thời gian tham gia nhóm
+        this.groupId = groupId;
+        this.userId = userId;
+        this.joinedAt = joinedAt;
     }
 
+    // Getter và Setter
     public String getGroupId() {
-        return groupId;  // Phương thức để lấy ID nhóm
+        return groupId;
     }
 
     public void setGroupId(String groupId) {
-        this.groupId = groupId;  // Phương thức để set ID nhóm
+        this.groupId = groupId;
     }
 
     public String getUserId() {
-        return userId;  // Phương thức để lấy ID người dùng
+        return userId;
     }
 
     public void setUserId(String userId) {
-        this.userId = userId;  // Phương thức để set ID người dùng
+        this.userId = userId;
     }
 
     public long getJoinedAt() {
-        return joinedAt;  // Phương thức để lấy thời gian tham gia nhóm
+        return joinedAt;
     }
 
     public void setJoinedAt(long joinedAt) {
-        this.joinedAt = joinedAt;  // Phương thức để set thời gian tham gia nhóm
+        this.joinedAt = joinedAt;
     }
 }

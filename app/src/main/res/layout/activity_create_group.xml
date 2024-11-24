@@ -4,12 +4,31 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <LinearLayout
+        android:id="@+id/ll1"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:gravity="center_vertical"
+        android:background="#fdf5e6"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/turnback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/exit"
+            android:contentDescription="Back button" />
+
+    </LinearLayout>
     <!-- Thanh tiêu đề -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:layout_below="@id/ll1"
         android:padding="16dp">
 
         <TextView
@@ -41,6 +60,7 @@
 
     <!-- Tên nhóm -->
     <EditText
+        android:layout_below="@id/ll1"
         android:id="@+id/groupName"
         android:layout_width="333dp"
         android:layout_height="wrap_content"

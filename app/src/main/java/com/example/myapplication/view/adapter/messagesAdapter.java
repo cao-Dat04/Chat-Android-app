@@ -1,4 +1,4 @@
-package com.example.myapplication.view;
+package com.example.myapplication.view.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.model.msgModel;
+import com.example.myapplication.view.ShowImageMessageActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -83,6 +84,13 @@ public class messagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.imageView.setVisibility(View.VISIBLE);
             Picasso.get().load(message.getMessage()).into(viewHolder.imageView);
             viewHolder.itemView.setOnClickListener(v -> downloadFile(message.getMessage()));
+
+            // Gắn sự kiện mở ShowImageActivity khi nhấn vào hình ảnh
+            viewHolder.imageView.setOnClickListener(v -> {
+                Intent intent = new Intent(viewHolder.itemView.getContext(), ShowImageMessageActivity.class);
+                intent.putExtra("image_url", message.getMessage()); // Truyền URL hình ảnh
+                viewHolder.itemView.getContext().startActivity(intent);
+            });
         } else if (message.getType().equals("file")) {
             viewHolder.fileLayout.setVisibility(View.VISIBLE);
             viewHolder.fileName.setText(message.getFileName());
@@ -124,10 +132,16 @@ public class messagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 viewHolder.msgtxt.setVisibility(View.VISIBLE);
                 viewHolder.msgtxt.setText(message.getMessage());
             } else if (message.getType().equals("image")) {
-                viewHolder.pronone.setVisibility(View.GONE);
+                viewHolder.pronone.setVisibility(View.VISIBLE);
                 viewHolder.imageView.setVisibility(View.VISIBLE);
                 Picasso.get().load(message.getMessage()).into(viewHolder.imageView);
-                viewHolder.itemView.setOnClickListener(v -> downloadFile(message.getMessage()));
+
+                // Gắn sự kiện mở ShowImageActivity khi nhấn vào hình ảnh
+                viewHolder.imageView.setOnClickListener(v -> {
+                    Intent intent = new Intent(viewHolder.itemView.getContext(), ShowImageMessageActivity.class);
+                    intent.putExtra("image_url", message.getMessage()); // Truyền URL hình ảnh
+                    viewHolder.itemView.getContext().startActivity(intent);
+                });
             } else if (message.getType().equals("file")) {
                 viewHolder.pronone.setVisibility(View.VISIBLE);
                 viewHolder.fileLayout.setVisibility(View.VISIBLE);
@@ -141,10 +155,16 @@ public class messagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 viewHolder.msgtxt.setVisibility(View.VISIBLE);
                 viewHolder.msgtxt.setText(message.getMessage());
             } else if (message.getType().equals("image")) {
-                viewHolder.pro.setVisibility(View.GONE);
+                viewHolder.pro.setVisibility(View.VISIBLE);
                 viewHolder.imageView.setVisibility(View.VISIBLE);
                 Picasso.get().load(message.getMessage()).into(viewHolder.imageView);
-                viewHolder.itemView.setOnClickListener(v -> downloadFile(message.getMessage()));
+
+                // Gắn sự kiện mở ShowImageActivity khi nhấn vào hình ảnh
+                viewHolder.imageView.setOnClickListener(v -> {
+                    Intent intent = new Intent(viewHolder.itemView.getContext(), ShowImageMessageActivity.class);
+                    intent.putExtra("image_url", message.getMessage()); // Truyền URL hình ảnh
+                    viewHolder.itemView.getContext().startActivity(intent);
+                });
             } else if (message.getType().equals("file")) {
                 viewHolder.pro.setVisibility(View.VISIBLE);
                 viewHolder.fileLayout.setVisibility(View.VISIBLE);
@@ -228,6 +248,4 @@ public class messagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public interface SenderNameCallback {
         void onNameReceived(String senderName);
     }
-
-
 }

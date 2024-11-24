@@ -1,4 +1,3 @@
-// File: GroupChatController.java
 package com.example.myapplication.controller;
 
 import android.content.Intent;
@@ -8,13 +7,10 @@ import android.provider.OpenableColumns;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.view.messagesAdapter;
+import com.example.myapplication.view.adapter.messagesAdapter;
 import com.example.myapplication.view.GroupChatActivity;
 import com.example.myapplication.model.msgModel;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

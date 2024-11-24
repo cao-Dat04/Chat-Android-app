@@ -1,4 +1,4 @@
-package com.example.myapplication.view;
+package com.example.myapplication.view.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.model.Users;
+import com.example.myapplication.view.ChatActivity;
+
 import java.util.ArrayList;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewholder> {

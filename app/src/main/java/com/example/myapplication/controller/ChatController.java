@@ -1,4 +1,3 @@
-// File: ChatController.java
 package com.example.myapplication.controller;
 
 import android.content.Intent;
@@ -8,13 +7,10 @@ import android.provider.OpenableColumns;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.view.messagesAdapter;
+import com.example.myapplication.view.adapter.messagesAdapter;
 import com.example.myapplication.view.ChatActivity;
 import com.example.myapplication.model.msgModel;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,7 +18,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -57,11 +52,8 @@ public class ChatController {
                 }
                 messagesAdapter.notifyDataSetChanged();
 
-                // Cuộn đến tin nhắn cuối cùng và hiển thị thông báo nếu cần
-                if (!messagesArrayList.isEmpty()) {
-                    chatActivity.msgAdapter.scrollToPosition(messagesArrayList.size() - 1);
-                    msgModel lastMessage = messagesArrayList.get(messagesArrayList.size() - 1);
-                }
+                // Cuộn đến tin nhắn cuối cùng
+                chatActivity.scrollToLastMessage();
             }
 
             @Override

@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,8 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.controller.GroupController;
-import com.example.myapplication.model.Group;
 import com.example.myapplication.model.Users;
+import com.example.myapplication.view.adapter.UserSearchAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -52,6 +55,9 @@ public class CreateGroupActivity extends AppCompatActivity {
         filteredUserList = new ArrayList<>();
         selectedUsers = new ArrayList<>();
 
+        // adminId là ID của người dùng hiện tại
+        String adminId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         // Khởi tạo UserSearchAdapter
         userAdapter = new UserSearchAdapter(this, filteredUserList, new UserSearchAdapter.OnUserSelectedListener() {
             @Override
@@ -62,6 +68,16 @@ public class CreateGroupActivity extends AppCompatActivity {
                 } else {
                     selectedUsers.add(user);
                 }
+            }
+        });
+
+        ImageButton turnback = findViewById(R.id.turnback);
+
+        // Turn back
+        turnback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
 
@@ -80,7 +96,11 @@ public class CreateGroupActivity extends AppCompatActivity {
                 userList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Users user = dataSnapshot.getValue(Users.class);
-                    userList.add(user);
+
+                    // Chỉ thêm những người dùng KHÁC với user hiện tại vào danh sách
+                    if (!user.getUserId().equals(adminId)) {
+                        userList.add(user);
+                    }
                 }
                 filterUserList(""); // Lọc lại danh sách khi dữ liệu thay đổi
             }
@@ -103,14 +123,6 @@ public class CreateGroupActivity extends AppCompatActivity {
                 showErrorMessage("Bạn chưa chọn thành viên cho nhóm.");
                 return;
             }
-
-            // Tạo tên nhóm tự động nếu không có
-            if (groupName.isEmpty()) {
-                groupName = generateGroupName(selectedUsers);
-            }
-
-            // Giả sử adminId là ID của người dùng hiện tại
-            String adminId = "admin_user_id"; // Thay thế bằng ID của người tạo nhóm (có thể lấy từ Firebase Auth)
 
             // Gọi GroupController để tạo nhóm
             groupController.createGroup(groupName, selectedUsers, adminId);
@@ -146,39 +158,15 @@ public class CreateGroupActivity extends AppCompatActivity {
         userAdapter.notifyDataSetChanged();
     }
 
-    private String generateGroupName(List<Users> selectedUsers) {
-        StringBuilder groupName = new StringBuilder();
-        for (int i = 0; i < Math.min(3, selectedUsers.size()); i++) {
-            groupName.append(selectedUsers.get(i).getFullname());
-            if (i < 2 && i < selectedUsers.size() - 1) {
-                groupName.append(", ");
-            }
-        }
-        if (selectedUsers.size() > 3) {
-            groupName.append(",...");
-        }
-        return groupName.toString();
-    }
-
     public void showErrorMessage(String message) {
-        // Hiển thị thông báo lỗi
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    // Phương thức này sẽ trả về danh sách người dùng đã chọn
-    public List<Users> getSelectedUsers() {
-        return selectedUsers;
-    }
-
-    public void onGroupCreated(Group group) {
-        // Hiển thị thông báo thành công khi nhóm được tạo
-        Toast.makeText(this, "Nhóm '" + group.getGroupName() + "' đã được tạo thành công!", Toast.LENGTH_SHORT).show();
-
-        // Nếu muốn chuyển sang màn hình khác (ví dụ: danh sách nhóm)
-        Intent intent = new Intent(CreateGroupActivity.this, Group.class);
+    public void onGroupCreated() {
+        Toast.makeText(this, "Nhóm đã được tạo thành công!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(CreateGroupActivity.this, MainActivityGroup.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Đảm bảo MainActivityGroup cũ bị đóng
         startActivity(intent);
-
-        // Hoặc nếu chỉ muốn quay lại màn hình trước
         finish();
     }
 }

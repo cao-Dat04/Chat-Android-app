@@ -1,6 +1,7 @@
-package com.example.myapplication.view;
+package com.example.myapplication.view.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.model.Group;
+import com.example.myapplication.view.GroupChatActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -68,6 +70,16 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
         holder.itemView.setOnClickListener(v -> {
             if (onItemClickListener != null) {
                 onItemClickListener.onItemClick(group);
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, GroupChatActivity.class);
+                intent.putExtra("groupName", group.getGroupName());
+                intent.putExtra("groupId", group.getGroupId());
+                context.startActivity(intent);
             }
         });
     }

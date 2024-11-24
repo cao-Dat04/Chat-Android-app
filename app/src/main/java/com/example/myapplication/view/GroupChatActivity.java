@@ -5,18 +5,15 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.OpenableColumns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.controller.GroupChatController;
 import com.example.myapplication.model.msgModel;
-import com.example.myapplication.view.messagesAdapter;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -24,6 +21,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.myapplication.view.adapter.messagesAdapter;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
@@ -76,6 +74,7 @@ public class GroupChatActivity extends AppCompatActivity {
         sendFileButton = findViewById(R.id.sendFile);
         sendImageButton = findViewById(R.id.sendImage);
         sendButton = findViewById(R.id.sendbtn);
+        ImageButton turnback = findViewById(R.id.turnback);
         //groupNameTextView = findViewById(R.id.groupNameTextView);
 
         // Hiển thị tên nhóm
@@ -105,6 +104,14 @@ public class GroupChatActivity extends AppCompatActivity {
         sendImageButton.setOnClickListener(v -> {
             // Thực hiện chức năng gửi hình ảnh
             groupChatController.selectImage();  // Gọi phương thức để chọn ảnh
+        });
+
+        // Turn back
+        turnback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
         });
 
         // Kiểm tra quyền truy cập bộ nhớ

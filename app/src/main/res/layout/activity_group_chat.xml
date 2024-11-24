@@ -11,16 +11,27 @@
     <LinearLayout
         android:id="@+id/ll1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:layout_height="49dp"
+        android:gravity="center_vertical"
+        android:background="#fdf5e6"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/turnback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/exit"
+            android:contentDescription="Back button" />
 
         <TextView
             android:id="@+id/recivername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/spartan_regular"
-            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/spartan_bold"
             android:text="Name"
             android:textColor="@color/black"
             android:textSize="19sp" />

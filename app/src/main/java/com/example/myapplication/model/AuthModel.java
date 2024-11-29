@@ -27,4 +27,3 @@ public class AuthModel {
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(listener);
     }
 }
-

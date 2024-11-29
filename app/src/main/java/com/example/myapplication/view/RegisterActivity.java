@@ -49,8 +49,15 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void signInWithGoogle() {
+        signOut(); // Đăng xuất trước khi thực hiện đăng nhập
         Intent signInIntent = googleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    private void signOut() {
+        googleSignInClient.signOut().addOnCompleteListener(task ->
+                Log.d("RegisterActivity", "User signed out successfully.")
+        );
     }
 
     @Override

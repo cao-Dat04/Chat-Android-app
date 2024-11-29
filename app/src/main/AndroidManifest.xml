@@ -9,25 +9,30 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-feature android:name="android.hardware.camera" android:required="true" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-
-
-
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
+        android:enableOnBackInvokedCallback="true"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher_foreground"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
-        android:enableOnBackInvokedCallback="true"
         tools:targetApi="31">
+        <activity
+            android:name=".view.ManageMemberActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.SettingGroupActivity"
+            android:exported="false" />
         <activity
             android:name=".view.ShowImageMessageActivity"
             android:exported="false" />
@@ -35,13 +40,7 @@
             android:name=".view.GroupChatActivity"
             android:exported="false" />
         <activity
-            android:name=".view.ProfileActivity"
-            android:exported="false" />
-        <activity
             android:name=".view.CreateGroupActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.ResetPinActivity"
             android:exported="false" />
         <activity
             android:name=".view.MainActivityGroup"
@@ -57,6 +56,12 @@
             android:exported="true" />
         <activity
             android:name=".view.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.ResetPinActivity"
             android:exported="false" />
         <activity
             android:name=".view.SplashActivity"

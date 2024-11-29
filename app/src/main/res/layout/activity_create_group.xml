@@ -4,20 +4,22 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <!-- Header -->
     <LinearLayout
         android:id="@+id/ll1"
         android:layout_width="match_parent"
         android:layout_height="49dp"
         android:gravity="center_vertical"
         android:background="#BDEDFF"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
 
         <ImageButton
             android:id="@+id/turnback"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="20dp"
             android:background="@drawable/back1"
             android:contentDescription="Back button" />
 
@@ -43,42 +45,65 @@
 
     <!-- Tên nhóm -->
     <EditText
-        android:layout_below="@id/ll1"
         android:id="@+id/groupName"
-        android:layout_width="333dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_below="@id/ll1"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginHorizontal="16dp"
         android:hint="Tên nhóm (không bắt buộc)"
         android:padding="12dp"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        />
 
     <!-- Ô tìm kiếm -->
     <EditText
         android:id="@+id/searchUsers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/groupName"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="16dp"
         android:hint="Tìm kiếm thành viên"
         android:drawablePadding="8dp"
-        android:layout_below="@id/groupName"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp"
         android:padding="12dp"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        />
 
-    <!-- Danh sách người dùng -->
+    <!-- Danh sách người dùng tìm kiếm -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/userRecyclerView"
-        android:layout_width="395dp"
-        android:layout_height="563dp"
+        android:id="@+id/searchRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
         android:layout_below="@id/searchUsers"
-        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
-        android:layout_weight="1"
-        android:paddingBottom="8dp" />
+        android:layout_marginHorizontal="16dp"
+        android:background="#7C765C"
+        android:paddingBottom="8dp"/>
+
+    <!-- Danh sách người dùng đã chọn -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/selectedRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@id/searchRecyclerView"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:background="#5E817A"
+        android:paddingBottom="8dp"/>
+
+    <!-- Tiêu đề Thành viên nhóm -->
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/selectedRecyclerView"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:text="Thành viên nhóm:"
+        android:textColor="@color/black"
+        android:background="#BDEDFF"
+        android:padding="8dp"
+        android:textSize="16sp"/>
 
 </RelativeLayout>

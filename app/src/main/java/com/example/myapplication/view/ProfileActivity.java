@@ -104,10 +104,10 @@ public class ProfileActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
     public void navigateToResetPinActivity(){
         Intent intent = new Intent(ProfileActivity.this, ResetPinActivity.class);
         startActivity(intent);
-        finish();
     }
 
     public void navigateToLogin() {

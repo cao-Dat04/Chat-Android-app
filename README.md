@@ -1,6 +1,6 @@
 # Chat-Android-app
-- **CoreChat** là một ứng dụng chat dành cho môi trường nội bộ doanh nghiệp, được phát triển trên nền tảng Android sử dụng ngôn ngữ lập trình **Java**. Ứng dụng này cho phép người dùng thực hiện các tính năng như nhắn tin, gửi file, và các chức năng giao tiếp khác, phục vụ cho việc kết nối và trao đổi thông tin nhanh chóng trong công ty. 
-- Dự án **CoreChat** sử dụng **Firebase API** để quản lý và đồng bộ dữ liệu người dùng và tin nhắn, cùng với **Android API** để phát triển giao diện người dùng và xử lý các tính năng ứng dụng. Các công nghệ giao diện người dùng hiện đại và dễ sử dụng cũng được tích hợp để nâng cao trải nghiệm người dùng.
+- **CoreTalk** là một ứng dụng chat dành cho môi trường nội bộ doanh nghiệp, được phát triển trên nền tảng Android sử dụng ngôn ngữ lập trình **Java**. Ứng dụng này cho phép người dùng thực hiện các tính năng như nhắn tin, gửi file, và các chức năng giao tiếp khác, phục vụ cho việc kết nối và trao đổi thông tin nhanh chóng trong công ty. 
+- Dự án **CoreTalk** sử dụng **Firebase API** để quản lý và đồng bộ dữ liệu người dùng và tin nhắn, cùng với **Android API** để phát triển giao diện người dùng và xử lý các tính năng ứng dụng. Các công nghệ giao diện người dùng hiện đại và dễ sử dụng cũng được tích hợp để nâng cao trải nghiệm người dùng.
 ![image](https://github.com/user-attachments/assets/064f35fa-69e9-447b-affe-f8b6fe67a5f4)
 # Các tính năng chính
 - Nhắn tin cá nhân (1-1).

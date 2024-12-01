@@ -111,11 +111,17 @@ public class ManageMemberActivity extends AppCompatActivity {
 
     private void filterMembers(String query) {
         List<Users> filteredMembers = new ArrayList<>();
-        for (Users user : groupMembers) {
-            if (user.getFullname().toLowerCase().contains(query.toLowerCase())) {
-                filteredMembers.add(user);
+
+        if (query.isEmpty()) {
+            filteredMembers = groupMembers;  // Hiển thị tất cả thành viên khi không có tìm kiếm
+        } else {
+            for (Users user : groupMembers) {
+                if (user.getFullname().toLowerCase().contains(query.toLowerCase())) {
+                    filteredMembers.add(user); // Lọc các thành viên theo tên
+                }
             }
         }
+
         groupMemberAdapter.updateMemberList(filteredMembers);
     }
 
